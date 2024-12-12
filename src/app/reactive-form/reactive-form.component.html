@@ -1,0 +1,66 @@
+<h1>Reactive Form Example</h1>
+
+<form [formGroup]="form">
+  <!-- Personal Information FormGroup -->
+  <fieldset formGroupName="personalInfo">
+    <legend>Personal Information</legend>
+
+    <label for="firstName">First Name:</label>
+    <input
+      id="firstName"
+      formControlName="firstName"
+      [class.invalid]="personalInfo.get('firstName')?.invalid && personalInfo.get('firstName')?.touched"
+    />
+    <div *ngIf="personalInfo.get('firstName')?.invalid && personalInfo.get('firstName')?.touched">
+      <small *ngIf="personalInfo.get('firstName')?.errors?.['required']">First Name is required.</small>
+      <small *ngIf="personalInfo.get('firstName')?.errors?.['minlength']">Minimum 3 characters required.</small>
+    </div>
+
+    <label for="lastName">Last Name:</label>
+    <input
+      id="lastName"
+      formControlName="lastName"
+      [class.invalid]="personalInfo.get('lastName')?.invalid && personalInfo.get('lastName')?.touched"
+    />
+    <div *ngIf="personalInfo.get('lastName')?.invalid && personalInfo.get('lastName')?.touched">
+      <small *ngIf="personalInfo.get('lastName')?.errors?.['required']">Last Name is required.</small>
+      <small *ngIf="personalInfo.get('lastName')?.errors?.['minlength']">Minimum 3 characters required.</small>
+    </div>
+  </fieldset>
+
+  <!-- Contact Information FormGroup -->
+  <fieldset formGroupName="contactInfo">
+    <legend>Contact Information</legend>
+
+    <label for="email">Email:</label>
+    <input
+      id="email"
+      formControlName="email"
+      [class.invalid]="contactInfo.get('email')?.invalid && contactInfo.get('email')?.touched"
+    />
+    <div *ngIf="contactInfo.get('email')?.invalid && contactInfo.get('email')?.touched">
+      <small *ngIf="contactInfo.get('email')?.errors?.['required']">Email is required.</small>
+      <small *ngIf="contactInfo.get('email')?.errors?.['email']">Invalid email format.</small>
+    </div>
+
+    <label for="phone">Phone:</label>
+    <input
+      id="phone"
+      formControlName="phone"
+      [class.invalid]="contactInfo.get('phone')?.invalid && contactInfo.get('phone')?.touched"
+    />
+    <div *ngIf="contactInfo.get('phone')?.invalid && contactInfo.get('phone')?.touched">
+      <small *ngIf="contactInfo.get('phone')?.errors?.['required']">Phone is required.</small>
+      <small *ngIf="contactInfo.get('phone')?.errors?.['pattern']">Only numbers allowed.</small>
+    </div>
+  </fieldset>
+
+  <!-- Form Status -->
+  <p>Form Status: {{ getFormValidationState() }}</p>
+
+  <!-- Form Values -->
+  <pre>{{ form.value | json }}</pre>
+
+  <!-- Button to Update Form Values -->
+  <button type="button" (click)="updateFormValues()">Update Form Values</button>
+</form>
